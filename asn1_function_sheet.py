@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import math
 
+
 def age_splitter(df, col_name, age_threshold):
     """
     Splits the dataframe into two dataframes based on an age threshold.
@@ -20,6 +21,8 @@ def age_splitter(df, col_name, age_threshold):
     df_below = df[df[col_name] < age_threshold]
     df_above_equal = df[df[col_name] >= age_threshold]
     return df_below, df_above_equal                      
+
+
 
 
     
