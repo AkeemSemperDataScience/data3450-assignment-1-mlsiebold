@@ -49,7 +49,7 @@ def effectSizer(df, num_col, cat_col):
 def cohenEffectSize(group1, group2):
     # You need to implement this helper function
     # This should not be too hard...
-    pass
+    
 
 def cohortCompare(df, cohorts, statistics=['mean', 'median', 'std', 'min', 'max']):
     """
