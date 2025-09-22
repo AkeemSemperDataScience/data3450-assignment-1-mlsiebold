@@ -50,6 +50,7 @@ def cohenEffectSize(group1, group2):
     # You need to implement this helper function
     # This should not be too hard...
     
+    pass
 
 def cohortCompare(df, cohorts, statistics=['mean', 'median', 'std', 'min', 'max']):
     """
@@ -63,8 +64,6 @@ def cohortCompare(df, cohorts, statistics=['mean', 'median', 'std', 'min', 'max'
             stats_dict[stat] = df[column].agg(stat)     # Apply stat calcultaion to column, store results in dictionary with the stat name as the key
         results[column] = stats_dict                # Create a key in results dictionary ('column'), assign the stats dictionary as the values
     return results
-
-  
 
 class CohortMetric():
     # don't change this
