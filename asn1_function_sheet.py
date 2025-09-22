@@ -37,6 +37,13 @@ def effectSizer(df, num_col, cat_col):
     Raises:
     ValueError: If the categorical column does not have exactly two unique values.
     """
+    if df[cat_col].value_counts() == 2:
+        df_grouped = df.groupby(df[cat_col])[num_col]
+        mean = df_grouped.mean()
+        std = df_grouped.std()
+        return mean, std
+    else: ValueError
+
     pass
 
 def cohenEffectSize(group1, group2):
