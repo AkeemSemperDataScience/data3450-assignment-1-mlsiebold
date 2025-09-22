@@ -22,9 +22,6 @@ def age_splitter(df, col_name, age_threshold):
     df_above_equal = df[df[col_name] >= age_threshold]
     return df_below, df_above_equal                      
 
-
-
-
     
 def effectSizer(df, num_col, cat_col):
     """
