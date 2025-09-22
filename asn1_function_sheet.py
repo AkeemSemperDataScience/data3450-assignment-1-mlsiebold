@@ -37,14 +37,14 @@ def effectSizer(df, num_col, cat_col):
     Raises:
     ValueError: If the categorical column does not have exactly two unique values.
     """
-    if df[cat_col].value_counts() == 2:
-        df_grouped = df.groupby(df[cat_col])[num_col]
-        mean = df_grouped.mean()
-        std = df_grouped.std()
+    if df[cat_col].nunique() == 2:                               # If the cat_column has 2 unique values
+        #df_grouped = df.groupby(df[cat_col])[num_col] 
+        mean = df[cat_col].mean()
+        std = df[cat_col].std()
         return mean, std
-    else: ValueError
+    else:
+        raise ValueError("Categorical column must have exactly two unique values.")
 
-    pass
 
 def cohenEffectSize(group1, group2):
     # You need to implement this helper function
@@ -56,12 +56,12 @@ def cohortCompare(df, cohorts, statistics=['mean', 'median', 'std', 'min', 'max'
     This function takes a dataframe and a list of cohort column names, and returns a dictionary
     where each key is a cohort name and each value is an object containing the specified statistics
     """
-    results = {}
-    for column in cohorts:    
-        stats_dict = {}
-        for stat in statistics:
-            stats_dict[stat] = df[column].agg(stat)
-        results[column] = stats_dict
+    results = {}                                # Create dictionary for cohorts and their corresponding statistics
+    for column in cohorts:                      # Go through each column listed as 'cohorts'
+        stats_dict = {}                             # Create dictionary for stats
+        for stat in statistics:                     # Go through each stat listed as 'statistics'
+            stats_dict[stat] = df[column].agg(stat)     # Apply stat calcultaion to column, store results in dictionary with the stat name as the key
+        results[column] = stats_dict                # Create a key in results dictionary ('column'), assign the stats dictionary as the values
     return results
 
   
