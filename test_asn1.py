@@ -25,7 +25,7 @@ def test_cohortCompare():
     df = pd.DataFrame({
         'age': [18, 22, 27, 29, 31, 35],
         'name': ['A', 'B', 'C', 'D', 'E', 'F'],
-        'income': [100, 150, 75, 60, 130]
+        'income': [100, 150, 75, 60, 130, 35]
     })
     expected = {
         'age': {
@@ -47,6 +47,8 @@ def test_cohortCompare():
 
     for cohort in expected:
         for stat in expected[cohort]:
-            assert result == expected 
+            assert result[cohort][stat] == expected[cohort][stat], f"{cohort} {stat} does not equal expected result" 
+
+    
     
   
