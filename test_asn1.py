@@ -47,7 +47,7 @@ def test_cohortCompare():
         }
     }
 
-    result = cohortCompare(df, ['age', 'income'], statistics=['mean', 'median', 'std', 'min', 'max'])
+    result = cohortCompare(df, ['age', 'name', 'income'], statistics=['mean', 'median', 'std', 'min', 'max'])
 
     for cohort in expected:
         for stat in expected[cohort]:
