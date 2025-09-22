@@ -58,10 +58,13 @@ def cohortCompare(df, cohorts, statistics=['mean', 'median', 'std', 'min', 'max'
     """
     results = {}                                # Create dictionary for cohorts and their corresponding statistics
     for column in cohorts:                      # Go through each column listed as 'cohorts'
-        stats_dict = {}                             # Create dictionary for stats
-        for stat in statistics:                     # Go through each stat listed as 'statistics'
-            stats_dict[stat] = df[column].agg(stat)     # Apply stat calcultaion to column, store results in dictionary with the stat name as the key
-        results[column] = stats_dict                # Create a key in results dictionary ('column'), assign the stats dictionary as the values
+        if df[column].dtypes != object:   
+            stats_dict = {}                             # Create dictionary for stats
+            for stat in statistics:                     # Go through each stat listed as 'statistics'
+                stats_dict[stat] = df[column].agg(stat)     # Apply stat calcultaion to column, store results in dictionary with the stat name as the key
+            results[column] = stats_dict                # Create a key in results dictionary ('column'), assign the stats dictionary as the values
+        else: 
+            results[column] = df[column].count()
     return results
 
 class CohortMetric():

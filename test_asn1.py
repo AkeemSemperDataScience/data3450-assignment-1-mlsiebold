@@ -34,20 +34,26 @@ def test_cohortCompare():
             'std': df['age'].std(),
             'min': df['age'].min(),
             'max': df['age'].max()
-    },
+        },
+        'name': {
+            'count': df['name'].count()
+        },
         'income': {
             'mean': df['income'].mean(),
             'median': df['income'].median(),
             'std': df['income'].std(),
             'min': df['income'].min(),
             'max': df['income'].max()
-    }}
+        }
+    }
 
     result = cohortCompare(df, ['age', 'income'], statistics=['mean', 'median', 'std', 'min', 'max'])
 
     for cohort in expected:
         for stat in expected[cohort]:
             assert result[cohort][stat] == expected[cohort][stat], f"{cohort} {stat} does not equal expected result" 
+
+
 
     
     
