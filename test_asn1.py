@@ -1,4 +1,4 @@
-from asn1_function_sheet import age_splitter, cohortCompare
+from asn1_function_sheet import age_splitter, cohortCompare, effectSizer
 import pandas as pd
 import numpy as np
 import pytest
@@ -67,6 +67,7 @@ def test_effectSizer():
     }
     actual = effectSizer(df, 'income', 'gender')
     assert actual == expected
+    print(f"Actual: {actual}, Expected: {expected}")
     
     
   
