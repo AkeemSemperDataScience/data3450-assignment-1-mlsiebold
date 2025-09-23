@@ -67,7 +67,7 @@ def test_effectSizer():
     }
     actual = effectSizer(df, 'income', 'gender')
     assert actual == expected
-    print(f"Actual: {actual}, Expected: {expected}")
+    #print(f"Actual: {actual}, Expected: {expected}")
     
     
   
