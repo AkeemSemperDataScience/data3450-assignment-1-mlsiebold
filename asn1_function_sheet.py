@@ -37,11 +37,16 @@ def effectSizer(df, num_col, cat_col):
     Raises:
     ValueError: If the categorical column does not have exactly two unique values.
     """
-    if df[cat_col].nunique() == 2:                               # If the cat_column has 2 unique values
-        #df_grouped = df.groupby(df[cat_col])[num_col] 
-        mean = df[cat_col].mean()
-        std = df[cat_col].std()
-        return mean, std
+    
+    effect_sizes = {}                                                       # Create dictionary for categorical classes and their corresponding effect sizes
+    if df[cat_col].nunique() == 2:                                              # If the cat_column has 2 unique values
+        mean1, mean2 = df.groupby(cat_col)[num_col].mean()                      # Calc mean for each group in cat_col
+        var1, var2 = df.groupby(cat_col)[num_col].var()                         # Calc variance
+        length1, length2 = df.groupby(cat_col)[num_col].count()                 # Find length of each group
+        pooled_var = (length1 * var1 + length2 * var2) / (length1 + length2)    # Calc pooled variance
+        eff_sz_d = (mean1 - mean2) / math.sqrt(pooled_var)                      # Calc Cohen's d 
+        effect_sizes[cat_col] = eff_sz_d
+        return effect_sizes
     else:
         raise ValueError("Categorical column must have exactly two unique values.")
 
