@@ -50,7 +50,7 @@ def effectSizer(df, num_col, cat_col):
         raise ValueError("Categorical column must have exactly two unique values.")
 
 
-def cohenEffectSize(group1, group2):
+def cohenEffectSize(group1, group2):                            # I don't know what this is for
     # You need to implement this helper function
     # This should not be too hard...
     return group1, group2
@@ -68,10 +68,9 @@ def cohortCompare(df, cohorts, statistics=['mean', 'median', 'std', 'min', 'max'
                 stats_dict[stat] = df[column].agg(stat)     # Apply stat calcultaion to column, store results in dictionary with the stat name as the key
             results[column] = stats_dict                # Create a key in results dictionary ('column'), assign the stats dictionary as the values
         else: 
-            count_dict = {}
-            count_dict['count'] = df[column].count()
-            results[column] = count_dict
+            results[column] = df[column].value_counts().to_dict()   # Count values in categorical columns and store in dictionary
     return results
+
 
 class CohortMetric():
     # don't change this
