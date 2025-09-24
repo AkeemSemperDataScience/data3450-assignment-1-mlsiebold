@@ -27,7 +27,7 @@ def test_age_splitter_2():
 def test_cohortCompare():
     df = pd.DataFrame({
         'age': [18, 22, 27, 29, 31, 35],
-        'name': ['A', 'B', 'C', 'D', 'E', 'F'],
+        'name': ['A', 'B', 'C', 'D', 'E', 'E'],
         'income': [100, 150, 75, 60, 130, 35]
     })
     expected = {
@@ -39,7 +39,11 @@ def test_cohortCompare():
             'max': df['age'].max()
         },
         'name': {
-            'count': df['name'].count()
+            'A': 1,
+            'B': 1,
+            'C': 1,
+            'D': 1,
+            'E': 2
         },
         'income': {
             'mean': df['income'].mean(),
