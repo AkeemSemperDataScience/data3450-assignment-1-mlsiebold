@@ -37,7 +37,7 @@ def effectSizer(df, num_col, cat_col):
     Raises:
     ValueError: If the categorical column does not have exactly two unique values.
     """
-    effect_sizes = {}                                                       # Create dictionary for categorical classes and their corresponding effect sizes
+    effect_sizes = {}                                                           # Create dictionary for categorical classes and their corresponding effect sizes
     if df[cat_col].nunique() == 2:                                              # If the cat_column has 2 unique values
         mean1, mean2 = df.groupby(cat_col)[num_col].mean().tolist()             # Calc mean for each group in cat_col and unpack
         var1, var2 = df.groupby(cat_col)[num_col].var().tolist()                # Calc variance
@@ -50,26 +50,27 @@ def effectSizer(df, num_col, cat_col):
         raise ValueError("Categorical column must have exactly two unique values.")
 
 
-def cohenEffectSize(group1, group2):                            # I don't know what this is for
+def cohenEffectSize(group1, group2):                                # I don't know what this is for
     # You need to implement this helper function
     # This should not be too hard...
     return group1, group2
+
 
 def cohortCompare(df, cohorts, statistics=['mean', 'median', 'std', 'min', 'max']):
     """
     This function takes a dataframe and a list of cohort column names, and returns a dictionary
     where each key is a cohort name and each value is an object containing the specified statistics
     """
-    results = {}                                # Create dictionary for cohorts and their corresponding statistics
-    for column in cohorts:                      # Go through each column listed as 'cohorts'
-        if df[column].dtypes != object:   
-            stats_dict = {}                             # Create dictionary for stats
-            for stat in statistics:                     # Go through each stat listed as 'statistics'
-                stats_dict[stat] = df[column].agg(stat)     # Apply stat calcultaion to column, store results in dictionary with the stat name as the key
-            results[column] = stats_dict                # Create a key in results dictionary ('column'), assign the stats dictionary as the values
-        else: 
-            results[column] = df[column].value_counts().to_dict()   # Count values in categorical columns and store in dictionary
-    return results
+    results = {}                                                    # Create dictionary for cohorts and their corresponding statistics
+    for column in cohorts:                                          # Go through each column listed as 'cohorts'
+        if pd.api.types.is_numeric_dtype(df[column]):               # Select numerical columns
+            stats_dict = {}                                         # Create dictionary for stats
+            for stat in statistics:                                 # Go through each stat listed as 'statistics'
+                stats_dict[stat] = df[column].agg(stat)             # Apply stat calcultaion to column, store results in dictionary with the stat name as the key
+            results[column] = stats_dict                            # Create a key in results dictionary ('column'), assign the stats dictionary as the values
+        else:
+            results[column] = df[column].value_counts().to_dict()   # Count values in categorical/object columns and store in dictionary
+    return results                                                  # Return 'results' dictionary
 
 
 class CohortMetric():
