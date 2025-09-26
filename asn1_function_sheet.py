@@ -50,7 +50,7 @@ def effectSizer(df, num_col, cat_col):
         raise ValueError("Categorical column must have exactly two unique values.")
 
 
-def cohenEffectSize(group1, group2):                                # I don't know what this is for
+def cohenEffectSize(group1, group2):                                # I don't know what this is for...
     # You need to implement this helper function
     # This should not be too hard...
     return group1, group2
@@ -61,16 +61,25 @@ def cohortCompare(df, cohorts, statistics=['mean', 'median', 'std', 'min', 'max'
     This function takes a dataframe and a list of cohort column names, and returns a dictionary
     where each key is a cohort name and each value is an object containing the specified statistics
     """
-    results = {}                                                    # Create dictionary for cohorts and their corresponding statistics
-    for column in cohorts:                                          # Go through each column listed as 'cohorts'
-        if pd.api.types.is_numeric_dtype(df[column]):               # Select numerical columns
-            stats_dict = {}                                         # Create dictionary for stats
-            for stat in statistics:                                 # Go through each stat listed as 'statistics'
-                stats_dict[stat] = df[column].agg(stat)             # Apply stat calcultaion to column, store results in dictionary with the stat name as the key
-            results[column] = stats_dict                            # Create a key in results dictionary ('column'), assign the stats dictionary as the values
+    results = {}                                                            # Create dictionary for cohorts and their corresponding statistics
+    for column in cohorts:                                                  # Go through each column listed as 'cohorts'
+        if pd.api.types.is_numeric_dtype(df[column]):                       # Select numerical columns
+            metric = CohortMetric(cohort_name=column)                       # Create CohortMetric object
+            setters = {                                                     # Create dictionary to map stat names to setter methods
+                "mean": metric.setMean,
+                "median": metric.setMedian,
+                "std": metric.setStd,
+                "min": metric.setMin,
+                "max": metric.setMax
+            }
+            stats_values = {}
+            for stat in statistics:                                         # Go through each stat listed as 'statistics'
+                stats_values[stat] = df[column].agg(stat)                   # Apply stat calcultaion to column, store results in dictionary with the stat name as the key
+                setters[stat](stats_values[stat])                           # I don't get this code... Somehow it updates the internal dictionary for the CohortMetric object aka metric
+            results[column] = stats_values                                  # Create a key in results dictionary ('column'), assign the stats_values dictionary as the values
         else:
-            results[column] = df[column].value_counts().to_dict()   # Count values in categorical/object columns and store in dictionary
-    return results                                                  # Return 'results' dictionary
+            results[column] = df[column].value_counts().to_dict()           # Count values in categorical/object columns and store in dictionary
+    return results                                                          # Return 'results' dictionary
 
 
 class CohortMetric():
