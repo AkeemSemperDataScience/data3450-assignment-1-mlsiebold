@@ -78,7 +78,7 @@ def cohortCompare(df, cohorts, statistics=['mean', 'median', 'std', 'min', 'max'
                 setters[stat](stats_values[stat])                           # I don't get this code... Somehow it updates the internal dictionary for the CohortMetric object aka metric
             results[column] = stats_values                                  # Create a key in results dictionary ('column'), assign the stats_values dictionary as the values
         else:
-            results[column] = {'count': df[column].count()}           # Count values in categorical/object columns and store in dictionary
+            results[column] = {'count': df[column].count()}                 # Count values in categorical/object columns and store in dictionary
     return results                                                          # Return 'results' dictionary
 
 
