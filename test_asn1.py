@@ -38,13 +38,7 @@ def test_cohortCompare():
             'min': df['age'].min(),
             'max': df['age'].max()
         },
-        'name': {
-            'A': 1,
-            'B': 1,
-            'C': 1,
-            'D': 1,
-            'E': 2
-        },
+        'name': {'count': 6},
         'income': {
             'mean': df['income'].mean(),
             'median': df['income'].median(),
